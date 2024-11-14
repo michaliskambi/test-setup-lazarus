@@ -19,3 +19,5 @@ jobs:
         uses: gcarreno/setup-lazarus@v3.3.0
         with:
           lazarus-version: stable
+      - name: Build
+        run: lazbuild --version
