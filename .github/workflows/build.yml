@@ -11,7 +11,12 @@ jobs:
     name: Build
     strategy:
       matrix:
-        runner: [ubuntu-latest, macos-latest, windows-latest]
+        # macOS note:
+        # We are not using macos-latest, as then setup-lazarus fails
+        # with message "This package is incompatible with this version of macOS."
+        # likely because of aarch64 vs x86_64.
+        # Using macos-13 as the latest macOS that is known to work flawlessly with CGE GHA.      
+        runner: [ubuntu-latest, macos-13, windows-latest]
     runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@v5
