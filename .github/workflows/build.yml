@@ -11,18 +11,20 @@ jobs:
     name: Build
     strategy:
       matrix:
-        # macOS note:
-        # We are not using macos-latest, as then setup-lazarus fails
-        # with message "This package is incompatible with this version of macOS."
-        # likely because of aarch64 vs x86_64.
-        # Using macos-13 as the latest macOS that is known to work flawlessly with CGE GHA.      
-        runner: [ubuntu-latest, macos-13, windows-latest]
+        runner: [ubuntu-latest, macos-15-intel, windows-latest]
     runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@v5
+
       - name: Install FPC+Lazarus
         uses: gcarreno/setup-lazarus@v3.3.1
+        if: matrix.runner != 'macos-15-intel'
         with:
           lazarus-version: stable
+
+      - name: Install FPC+Lazarus (brew)
+        if: matrix.runner == 'macos-15-intel'
+        run: brew install lazarus
+
       - name: Build
         run: lazbuild --version
