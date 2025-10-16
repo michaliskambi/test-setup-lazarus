@@ -11,7 +11,20 @@ jobs:
     name: Build
     strategy:
       matrix:
-        runner: [ubuntu-latest, macos-15-intel, windows-latest]
+        runner: [
+          ubuntu-latest,
+
+          # macOS seems impossible now.
+          # - gcarreno/setup-lazarus@v3.3.1 fails on macos-15-intel with
+          #   "This package is incompatible with this version of macOS. Contact the developer for support."
+          # - gcarreno/setup-lazarus@v3.3.1 worked on macos-13,
+          #   but macos-13 is removed now from GitHub.
+          # - brew "lazarus" package depends on fpc-laz and is deprecated
+          #   and fails to install with
+          #   "This package is incompatible with this version of macOS. Contact the developer for support."
+          # macos-15-intel,
+
+          windows-latest]
     runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@v5
@@ -22,9 +35,9 @@ jobs:
         with:
           lazarus-version: stable
 
-      - name: Install FPC+Lazarus (brew)
-        if: matrix.runner == 'macos-15-intel'
-        run: brew install lazarus
+      # - name: Install FPC+Lazarus (brew)
+      #   if: matrix.runner == 'macos-15-intel'
+      #   run: brew install lazarus
 
       - name: Build
         run: lazbuild --version
