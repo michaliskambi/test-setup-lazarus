@@ -15,9 +15,9 @@ jobs:
           ubuntu-latest,
 
           # macOS seems impossible now.
-          # - gcarreno/setup-lazarus@v3.4.0 fails on macos-15-intel with
+          # - gcarreno/setup-lazarus@v3.4.1 fails on macos-15-intel with
           #   "This package is incompatible with this version of macOS. Contact the developer for support."
-          # - gcarreno/setup-lazarus@v3.4.0 worked on macos-13,
+          # - gcarreno/setup-lazarus@v3.4.1 worked on macos-13,
           #   but macos-13 is removed now from GitHub.
           # - brew "lazarus" package depends on fpc-laz and is deprecated
           #   and fails to install with
@@ -30,7 +30,7 @@ jobs:
       - uses: actions/checkout@v6
 
       - name: Install FPC+Lazarus
-        uses: gcarreno/setup-lazarus@v3.4.0
+        uses: gcarreno/setup-lazarus@v3.4.1
         if: matrix.runner != 'macos-15-intel'
         with:
           lazarus-version: stable
